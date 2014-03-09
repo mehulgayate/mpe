@@ -77,8 +77,26 @@ function clearText(field)
         
     <div id="templatemo_main">
     	<div class="content_wrapper content_mb_30">
-        	File Uploaded and Clusters can be found at : ${error} 
+        	File Type : ${fileType }
+        	<br/>
+        	<br/>
+        	<br/>
+        	Compile Output Is
+        	<br/>
+        	<strong>
+        	${compileOutput}
+        	</strong>
+        	<br/>
+        	<br/>
+        	Run Output Is
+        	<br/>
+        	<strong>
+        	${runOutput}
+        	</strong> 
         	
+        	<br/>
+        	<br/>
+        	<a href="/download-file?type=${download}">Download Compiled File</a>
         </div>
     	<div class="content_wrapper">
             

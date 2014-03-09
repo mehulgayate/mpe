@@ -6,13 +6,13 @@ import java.io.InputStreamReader;
 
 public class FileProcessor {
 	
-	String resultString;
+	
 
-	void compileCFile(String fileName)
+	public String compileCFile(String fileName)
     {
         String compileFileCommand = "gcc " + fileName;
 
-        resultString = "";
+        String resultString= "";
         try
         {
             System.out.println("Compiling C File");
@@ -39,16 +39,18 @@ public class FileProcessor {
             System.out.println("Exception ");
             System.out.println(e.getMessage());
         }
+        return resultString;
     }
 
-    void runCFile(String fileName)
+   public String runCFile(String fileName)
     {
-        String runFileCommand = "./" + fileName.split(".c")[0];
+	   String resultString="";
+        String runFileCommand = "./a.out";
 
         try
         {
 
-            System.out.println("Running C File");
+            System.out.println("Running C File "+runFileCommand);
 
             Process processRun = Runtime.getRuntime().exec(runFileCommand);
 
@@ -62,16 +64,19 @@ public class FileProcessor {
             if (outputRun != null)
                 System.out.println("Output Run = " + outputRun);
 
+            resultString=outputRun;
         } catch (Exception e)
         {
             // TODO: handle exception
             System.out.println("Exception ");
             System.out.println(e.getMessage());
         }
+        return resultString;
     }
 
-    void compileCPPFile(String fileName)
+    public String compileCPPFile(String fileName)
     {
+    	String resultString="";
         String compileFileCommand = "g++ " + fileName;
         try
         {
@@ -100,11 +105,13 @@ public class FileProcessor {
             System.out.println("Exception ");
             System.out.println(e.getMessage());
         }
+        return resultString;
     }
 
-    void runCPPFile(String fileName)
+    public String runCPPFile(String fileName)
     {
-        String runFileCommand = "./" + fileName.split(".cpp")[0];
+    	String resultString="";
+        String runFileCommand = "./a.out";
 
         try
         {
@@ -114,24 +121,32 @@ public class FileProcessor {
 
             BufferedReader brRun = new BufferedReader(new InputStreamReader(processRun.getErrorStream()));
             String errorRun = brRun.readLine();
-            if (errorRun != null)
+            if (errorRun != null){
                 System.out.println("Error Run = " + errorRun);
+                resultString=errorRun;
+            }
 
             BufferedReader brResult = new BufferedReader(new InputStreamReader(processRun.getInputStream()));
             String outputRun = brResult.readLine();
-            if (outputRun != null)
+            if (outputRun != null){
                 System.out.println("Output Run = " + outputRun);
+                resultString=outputRun;
+            }
 
+            
         } catch (Exception e)
         {
             // TODO: handle exception
             System.out.println("Exception ");
             System.out.println(e.getMessage());
         }
+        return resultString;
     }
     
-    void compileJavaFile(String fileName)
+    public String compileJavaFile(String fileName)
     {
+    	String resultString="";
+    	fileName="JavaProgram.java";
         String compileFileCommand = "javac " + fileName;
         try
         {
@@ -145,11 +160,13 @@ public class FileProcessor {
             while ((line = bri.readLine()) != null)
             {
                 System.out.println(line);
+                resultString=resultString+line+"\n";
             }
             bri.close();
             while ((line = bre.readLine()) != null)
             {
-                System.out.println(line);
+                System.out.println("Error  "+line);
+                resultString=resultString+line+"\n";
             }
             bre.close();
             compileProcess.waitFor();
@@ -160,25 +177,31 @@ public class FileProcessor {
             System.out.println("Exception ");
             System.out.println(e.getMessage());
         }
+        return resultString;
     }
 
-    void runJavaFile(String fileName)
+    public String runJavaFile(String fileName)
     {
-        String runFileCommand = "java " + fileName.split(".java")[0];
+    	String resultString="";
+        String runFileCommand = "java " + "JavaProgram";
+        System.out.println("Running command ::: " +runFileCommand);
         try
         {
             System.out.println("runFileCommand : " + runFileCommand);
             System.out.println("Running Java File");
 
             Process runProcess = Runtime.getRuntime().exec(runFileCommand);
-
+            
             BufferedReader reader = new BufferedReader(new InputStreamReader(runProcess.getInputStream()));
             String line = reader.readLine();
             System.out.println("line = " + line);
             while (line != null)
             {
+            	resultString=resultString+line;
                 System.out.println(line);
                 line = reader.readLine();
+                
+                
             }
 
         } catch (Exception e)
@@ -187,5 +210,6 @@ public class FileProcessor {
             System.out.println("Exception ");
             System.out.println(e.getMessage());
         }
+        return resultString;
     }
 }

@@ -74,4 +74,6 @@
 	</bean>	
 	<bean id="multipartResolver"
                 class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	<bean id="fileProcessor"
+                class="com.mpe.service.FileProcessor" />
 </beans>
