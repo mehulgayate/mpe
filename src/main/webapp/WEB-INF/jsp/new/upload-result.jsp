@@ -77,7 +77,7 @@ function clearText(field)
         
     <div id="templatemo_main">
     	<div class="content_wrapper content_mb_30">
-        	File Uploaded and Clusters can be found at : ${cluterLocation} 
+        	File Uploaded and Clusters can be found at : ${error} 
         	
         </div>
     	<div class="content_wrapper">

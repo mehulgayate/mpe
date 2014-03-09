@@ -24,10 +24,20 @@ public class MainController {
 	public ModelAndView uploadFile(@ModelAttribute(FileUploadForm.key) FileUploadForm fileUploadForm)throws Exception{
 		ModelAndView mv=new ModelAndView("new/upload-result");
 		try {
-			
+			String[] splitedName=fileUploadForm.getXmlFile().getOriginalFilename().split("\\.");
+			if(splitedName[splitedName.length-1].equals("java")){
+				System.out.println("*********** Its A Java File");
+			}else if(splitedName[splitedName.length-1].equals("c")){
+				System.out.println("*********** Its A C File");
+			}else if(splitedName[splitedName.length-1].equals("cpp")){
+				System.out.println("*********** Its A C++ File");
+			}else  {
+				mv.addObject("error", "File Not Supported");
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			mv.addObject("error", "File Not Supported");
 		}	
 		return mv;
 	}

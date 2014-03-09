@@ -72,4 +72,6 @@
 		class="com.evalua.entity.support.DataStoreManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>	
+	<bean id="multipartResolver"
+                class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 </beans>
