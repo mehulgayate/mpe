@@ -81,6 +81,7 @@ function clearText(field)
         	<br/>
         	<br/>
         	<br/>
+        	<hr/>
         	<br/>
         	<br/>
         	Input File
@@ -89,6 +90,7 @@ function clearText(field)
         	${code}
         	</strong> 
         	<br/>
+        	<hr/>
         	<br/>
         	Compile Output Is
         	<br/>
@@ -96,6 +98,7 @@ function clearText(field)
         	${compileOutput}
         	</strong>
         	<br/>
+        	<hr/>
         	<br/>
         	Run Output Is
         	<br/>
@@ -104,6 +107,7 @@ function clearText(field)
         	</strong> 
         	
         	<br/>
+        	<hr/>
         	<br/>
         	<a href="/mpe/download-file?type=${download}">Download Compiled File</a>
         </div>
