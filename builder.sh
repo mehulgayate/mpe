@@ -17,9 +17,9 @@ mvn clean
 
 mvn compile war:exploded
 
-if [ ! -L $TOMCAT_WEBAPP/ROOT ]; then
+if [ ! -L $TOMCAT_WEBAPP/$PROJECT_NAME ]; then
 cd $TOMCAT_WEBAPP
-ln -s $TARGET_WEBAPP ROOT
+ln -s $TARGET_WEBAPP $PROJECT_NAME
 fi
 
 cd $TARGET_WEBAPP 

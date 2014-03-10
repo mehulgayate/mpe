@@ -5,20 +5,20 @@
 <title>Secured Theme</title>
 <meta name="keywords" content="secured theme, free template, templatemo, red layout" />
 <meta name="description" content="Secured Theme is provided by templatemo.com" />
-<link href="/static/templatemo_style.css" rel="stylesheet" type="text/css" />
+<link href="/mpe/static/templatemo_style.css" rel="stylesheet" type="text/css" />
 
-<link rel="stylesheet" type="text/css" href="/static/style.css" />
-<script type="text/javascript" src="/static/js/jquery.min.js" ></script>
-<script type="text/javascript" src="/static/js/jquery-ui.min.js" ></script>
+<link rel="stylesheet" type="text/css" href="/mpe/static/style.css" />
+<script type="text/javascript" src="/mpe/static/js/jquery.min.js" ></script>
+<script type="text/javascript" src="/mpe/static/js/jquery-ui.min.js" ></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#featured > ul").tabs({fx:{opacity: "toggle"}}).tabs("rotate", 5000, true);
 	});
 </script>
 
-<link rel="stylesheet" type="text/css" href="/static/css/ddsmoothmenu.css" />
+<link rel="stylesheet" type="text/css" href="/mpe/static/css/ddsmoothmenu.css" />
 
-<script type="text/javascript" src="/static/js/ddsmoothmenu.js">
+<script type="text/javascript" src="/mpe/static/js/ddsmoothmenu.js">
 
 /***********************************************
 * Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
@@ -46,8 +46,8 @@ function clearText(field)
 
 </script>
 
-<link rel="stylesheet" href="/static/css/slimbox2.css" type="text/css" media="screen" /> 
-<script type="text/JavaScript" src="/static/js/slimbox2.js"></script> 
+<link rel="stylesheet" href="/mpe/static/css/slimbox2.css" type="text/css" media="screen" /> 
+<script type="text/JavaScript" src="/mpe/static/js/slimbox2.js"></script> 
 
 
 </head>
@@ -62,10 +62,10 @@ function clearText(field)
 
          <div id="templatemo_menu" class="ddsmoothmenu">
             <ul>
-                <li><a href="/">Home</a></li>
+                <li><a href="/mpe">Home</a></li>
                 <li><a href="" class="selected">Upload</a>
                     <ul>
-                        <li><a href="/upload-new">Upload New file</a></li>                                                                                             
+                        <li><a href="/mpe/upload-new">Upload New file</a></li>                                                                                             
                   </ul>
                 </li>                                
             </ul>
@@ -74,7 +74,7 @@ function clearText(field)
         
     <div id="templatemo_main">
     	<div class="content_wrapper content_mb_30">
-        	<form action="/upload-xml" method="post" enctype="multipart/form-data">
+        	<form action="/mpe/upload-xml" method="post" enctype="multipart/form-data">
 			<div style="margin: 0 auto;">
 				Upload new c or cpp or java file : <input type="file" name="xmlFile">
 				<br>

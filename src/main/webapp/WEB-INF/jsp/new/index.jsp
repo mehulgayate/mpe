@@ -2,23 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>WSM</title>
+<title>MPE</title>
 <meta name="keywords" content="secured theme, free template, templatemo, red layout" />
 <meta name="description" content="Secured Theme is provided by templatemo.com" />
-<link href="/static/templatemo_style.css" rel="stylesheet" type="text/css" />
+<link href="/mpe/static/templatemo_style.css" rel="stylesheet" type="text/css" />
 
-<link rel="stylesheet" type="text/css" href="/static/style.css" />
-<script type="text/javascript" src="/static/js/jquery.min.js" ></script>
-<script type="text/javascript" src="/static/js/jquery-ui.min.js" ></script>
+<link rel="stylesheet" type="text/css" href="/mpe/static/style.css" />
+<script type="text/javascript" src="/mpe/static/js/jquery.min.js" ></script>
+<script type="text/javascript" src="/mpe/static/js/jquery-ui.min.js" ></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#featured > ul").tabs({fx:{opacity: "toggle"}}).tabs("rotate", 5000, true);
 	});
 </script>
 
-<link rel="stylesheet" type="text/css" href="/static/css/ddsmoothmenu.css" />
+<link rel="stylesheet" type="text/css" href="/mpe/static/css/ddsmoothmenu.css" />
 
-<script type="text/javascript" src="/static/js/ddsmoothmenu.js">
+<script type="text/javascript" src="/mpe/static/js/ddsmoothmenu.js">
 
 /***********************************************
 * Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
@@ -46,8 +46,8 @@ function clearText(field)
 
 </script>
 
-<link rel="stylesheet" href="/static/css/slimbox2.css" type="text/css" media="screen" /> 
-<script type="text/JavaScript" src="/static/js/slimbox2.js"></script> 
+<link rel="stylesheet" href="/mpe/static/css/slimbox2.css" type="text/css" media="screen" /> 
+<script type="text/JavaScript" src="/mpe/static/js/slimbox2.js"></script> 
 
 
 </head>
@@ -62,11 +62,11 @@ function clearText(field)
 
          <div id="templatemo_menu" class="ddsmoothmenu">
             <ul>
-                <li><a href="/" class="selected">Home</a></li>
+                <li><a href="/mpe" class="selected">Home</a></li>
                 
                 <li><a href="">Upload</a>
                     <ul>
-                        <li><a href="/upload-new">Upload New file</a></li>                                                                                             
+                        <li><a href="/mpe/upload-new">Upload New file</a></li>                                                                                             
                   </ul>
                 </li>                                
             </ul>

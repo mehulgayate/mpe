@@ -5,7 +5,7 @@ int main()
 int rad;
 float PI=3.14,area,ci;
 
-printf("Hello Mehul YO Yo");
+printf("Hello World C language");
 
 return(0);
 }

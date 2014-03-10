@@ -54,6 +54,7 @@ public class MainController {
 				runOutput=fileProcessor.runJavaFile("/mpe/JavaProgram.java");
 				mv.addObject("fileType","JAVA");
 				mv.addObject("runOutput",runOutput);
+				mv.addObject("code",fileProcessor.getFileContents("JavaProgram.java"));
 				mv.addObject("compileOutput",compileOutput);
 				mv.addObject("download","JavaProgram.class");
 			}else if(splitedName[splitedName.length-1].equals("c")){
@@ -65,13 +66,15 @@ public class MainController {
 				mv.addObject("fileType","C");
 				mv.addObject("runOutput",runOutput);
 				mv.addObject("compileOutput",compileOutput);
+				mv.addObject("code",fileProcessor.getFileContents("CProgram.c"));
 				mv.addObject("download","a.out");
 			}else if(splitedName[splitedName.length-1].equals("cpp")){
 				System.out.println("*********** Its A C++ File");
 				System.out.println(writeFile(fileUploadForm.getXmlFile(), "CPPProgram","cpp"));
 				String compileOutput=fileProcessor.compileCPPFile("CPPProgram.cpp");
 				String runOutput=fileProcessor.runCPPFile("CPPProgram.c");
-				
+				mv.addObject("code",fileProcessor.getFileContents("CPPProgram.cpp"));
+
 				mv.addObject("fileType","CPP");
 				mv.addObject("runOutput",runOutput);
 				mv.addObject("compileOutput",compileOutput);
@@ -98,7 +101,7 @@ public class MainController {
 	
 	@RequestMapping("/download-file")
 	public void getFile(
-	    @RequestParam String type,@RequestParam String name, 
+	    @RequestParam String type, 
 	    HttpServletResponse response) {
 		int BUFFER_SIZE = 4096;
 
@@ -111,7 +114,7 @@ public class MainController {
 	        byte[] buffer = new byte[BUFFER_SIZE];
 	        int bytesRead = -1;
 	 
-	        response.setHeader("Content-Disposition", "attachment; filename=\"dummyname " + name + "\"");
+	        response.setHeader("Content-Disposition", "attachment; filename=\" " + type + "\"");
 
 	        
 	        // write bytes read from the input stream into the output stream
