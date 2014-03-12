@@ -208,7 +208,6 @@ public class FileProcessor {
 			System.out.println("Running Java File");
 
 			Process runProcess = Runtime.getRuntime().exec(runFileCommand);
-			runProcess = Runtime.getRuntime().exec("pwd");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(runProcess.getInputStream()));
 			String line = reader.readLine();
 			System.out.println("line = " + line);
