@@ -76,4 +76,13 @@
                 class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 	<bean id="fileProcessor"
                 class="com.mpe.service.FileProcessor" />
+	<bean id="facadeRepository"
+                class="com.mpe.service.FacadeRepository" >
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="userService" class="com.mpe.service.UserService" >
+		<property name="facadeRepository" ref="facadeRepository" />
+		<property name="dataStoreManager" ref="dataStoreManager" />
+	</bean>
+	
 </beans>
