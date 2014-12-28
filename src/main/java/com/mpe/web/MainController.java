@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,19 +21,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
+import com.mpe.entity.User;
 import com.mpe.form.FileUploadForm;
 import com.mpe.service.FileProcessor;
+import com.mpe.service.UserForm;
+import com.mpe.service.UserService;
 
 @Controller
 public class MainController {
 	
 	@Resource
 	private FileProcessor fileProcessor;
+	
+	@Resource
+	private UserService userService;
 
 	@RequestMapping("/")
 	public ModelAndView showHome(HttpServletRequest request){
-		ModelAndView mv=new ModelAndView("new/index");
+		ModelAndView mv=new ModelAndView("service-invoke/login");
 		return mv;
 	}
 	@RequestMapping("/upload-new")
@@ -129,6 +135,40 @@ public class MainController {
 	      throw new RuntimeException("IOError writing file to output stream");
 	    }
 
+	}
+	
+	@RequestMapping("/login")
+	public ModelAndView login(HttpSession httpSession){
+		ModelAndView mv=new ModelAndView("login");
+		User userl=(User) httpSession.getAttribute("user");		
+		return mv;
+	}
+	
+	@RequestMapping("/authenticate")
+	public ModelAndView authenticate(HttpSession httpSession,HttpServletRequest request){
+		ModelAndView mv=new ModelAndView("new/index");
+		String email=request.getParameter("email");
+		String password=request.getParameter("password");
+		User user=userService.validate(email, password);
+		if(user==null){
+			mv=new ModelAndView("service-invoke/login");
+			mv.addObject("error", "email /  password is wrong");
+		}
+		return mv;
+	}
+	
+	@RequestMapping("/register")
+	public ModelAndView register(){
+		ModelAndView mv=new ModelAndView("signup/signup");
+
+		return mv;
+	}
+
+	@RequestMapping("/register/add")
+	public ModelAndView registerNewUser(HttpServletRequest request,@ModelAttribute(UserForm.key) UserForm userForm){
+		ModelAndView mv=new ModelAndView("signup/complete");
+		userService.addUser(userForm);
+		return mv;
 	}
 
 }
