@@ -67,7 +67,8 @@ function clearText(field)
                     <ul>
                         <li><a href="/mpe/upload-new">Upload New file</a></li>                                                                                             
                   </ul>
-                </li>                                
+                </li>             
+               <li><a href="/mpe/user-files">User Uploads</a></li>                    
             </ul>
             <br style="clear: left" />
         </div> <!-- end of templatemo_menu -->

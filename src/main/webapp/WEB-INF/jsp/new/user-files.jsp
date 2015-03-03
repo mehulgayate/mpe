@@ -1,8 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ page isELIgnored ="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>MPE</title>
+<title>WSM</title>
 <meta name="keywords" content="secured theme, free template, templatemo, red layout" />
 <meta name="description" content="Secured Theme is provided by templatemo.com" />
 <link href="/mpe/static/templatemo_style.css" rel="stylesheet" type="text/css" />
@@ -62,65 +66,34 @@ function clearText(field)
 
          <div id="templatemo_menu" class="ddsmoothmenu">
             <ul>
-                <li><a href="/mpe" class="selected">Home</a></li>
-                
-                <li><a href="">Upload</a>
+                <li><a href="/mpe">Home</a></li>
+                <li><a href="" >Upload</a>
                     <ul>
-                        <li><a href="/mpe/upload-new">Upload New file</a></li>                                                                                             
+                        <li><a href="/mpe/upload-new" class="selected">Upload New file</a></li>                                                                                             
                   </ul>
-                </li>    
-                <li><a href="/mpe/user-files">User Uploads</a></li>                           
+                </li>      
+                 <li><a href="/mpe/user-files">User Uploads</a></li>                          
             </ul>
             <br style="clear: left" />
         </div> <!-- end of templatemo_menu -->
         
-    <div id="featured">
-		  <ul class="ui-tabs-nav">
-	        <li class="ui-tabs-nav-item ui-tabs-selected" id="nav-fragment-1"><a href="#fragment-1"><span>Project Definition</span></a></li>
-	        <li class="ui-tabs-nav-item" id="nav-fragment-2"><a href="#fragment-2"><span>C</span></a></li>
-	        <li class="ui-tabs-nav-item" id="nav-fragment-3"><a href="#fragment-3"><span>C++</span></a></li>
-	        <li class="ui-tabs-nav-item" id="nav-fragment-4"><a href="#fragment-4"><span>Java</span></a></li>
-	      </ul>
-
-	    <!-- First Content -->
-	    <div id="fragment-1" class="ui-tabs-panel" style="">
-			<img src="" alt="" />
-			 <div class="info" >
-				<h2><a href="#" >Project Definition</a></h2>
-				<p>Write Something here...</p>
-			 </div>
-	    </div>
-
-	    <!-- Second Content -->
-	    <div id="fragment-2" class="ui-tabs-panel ui-tabs-hide" style="">
-			<img src="" alt="" />
-			 <div class="info" >
-				<h2><a href="#" >C</a></h2>
-				<p>Write Something here...</p>
-			 </div>
-	    </div>
-
-	    <!-- Third Content -->
-	    <div id="fragment-3" class="ui-tabs-panel ui-tabs-hide" style="">
-			<img src="" alt="" />
-			 <div class="info" >
-				<h2><a href="#" >C++</a></h2>
-				<p>Write Something here...</p>
-	         </div>
-	    </div>
-
-	    <!-- Fourth Content -->
-	    <div id="fragment-4" class="ui-tabs-panel ui-tabs-hide" style="">
-			<img src="" alt="" />
-			 <div class="info" >
-				<h2><a href="#" >Java</a></h2>
-				<p>Write Something here...</p>
-	         </div>
-	    </div>
-
-	</div>
     <div id="templatemo_main">
-    	    	<div class="content_wrapper">
+    	<div class="content_wrapper content_mb_30">
+    	<table >
+    	<tr>
+    <td style="border: 1px solid;">Upload Date</td>
+    <td style="border: 1px solid;">File Name</td>    
+  </tr>
+        	<c:forEach items="${userFiles}" var="element"> 
+  <tr>
+    <td style="border: 1px solid;">${element.uploadedDate}</td>
+    <td style="border: 1px solid;">${element.fileName}</td>    
+  </tr>
+  
+</c:forEach>
+</table>
+        </div>
+    	<div class="content_wrapper">
             
         </div>
         <div class="clear"></div>
@@ -137,5 +110,4 @@ function clearText(field)
     </div>
 </div>
 </body>
-<script type='text/javascript' src='js/logging.js'></script>
 </html>
