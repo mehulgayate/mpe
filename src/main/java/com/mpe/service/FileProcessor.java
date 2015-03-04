@@ -164,6 +164,7 @@ public class FileProcessor {
 		try
 		{
 			System.out.println("Executing Java File");
+			Runtime.getRuntime().exec("pwd");
 
 			Process compileProcess = Runtime.getRuntime().exec(compileFileCommand);
 
@@ -206,7 +207,7 @@ public class FileProcessor {
 		{
 			System.out.println("runFileCommand : " + runFileCommand);
 			System.out.println("Running Java File");
-
+			Runtime.getRuntime().exec("pwd");
 			Process runProcess = Runtime.getRuntime().exec(runFileCommand);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(runProcess.getInputStream()));
 			String line = reader.readLine();
