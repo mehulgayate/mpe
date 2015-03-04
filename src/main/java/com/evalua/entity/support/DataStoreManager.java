@@ -1,7 +1,12 @@
 package com.evalua.entity.support;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import com.mpe.entity.User;
+import com.mpe.entity.UserFile;
 
 public class DataStoreManager {
 
@@ -18,7 +23,13 @@ public class DataStoreManager {
 	}
 
 	private Session getSession(){
-		return sessionFactory.openSession();
+		return sessionFactory.getCurrentSession();
+	}
+	
+	public List<UserFile> listUserFiles(User user){
+		return getSession().createQuery("FROM "+UserFile.class.getName()+" pp where pp.user=:user")
+				.setParameter("user", user)
+				.list();
 	}
 
 }

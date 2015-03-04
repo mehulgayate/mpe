@@ -8,8 +8,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.jws.soap.SOAPBinding.Use;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,18 +23,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.evalua.entity.support.DataStoreManager;
 import com.mpe.entity.User;
+import com.mpe.entity.UserFile;
 import com.mpe.form.FileUploadForm;
 import com.mpe.service.FileProcessor;
 import com.mpe.service.UserForm;
 import com.mpe.service.UserService;
+import com.sun.xml.internal.bind.v2.runtime.reflect.ListIterator;
 
 @Controller
 public class MainController {
-	
+
 	@Resource
 	private FileProcessor fileProcessor;
 	
+	@Resource
+	private DataStoreManager dataStoreManager;
+
 	@Resource
 	private UserService userService;
 
@@ -47,9 +56,19 @@ public class MainController {
 		return mv;
 	}
 	@RequestMapping("/upload-xml")
-	public ModelAndView uploadFile(@ModelAttribute(FileUploadForm.key) FileUploadForm fileUploadForm)throws Exception{
+	public ModelAndView uploadFile(@ModelAttribute(FileUploadForm.key) FileUploadForm fileUploadForm, HttpSession session)throws Exception{
+		User user = (User) session.getAttribute("user");
+		if(user==null){
+			return new ModelAndView("redirect:/login");
+		}
 		ModelAndView mv=new ModelAndView("new/upload-result");
 		try {
+			UserFile userFile =new UserFile();
+			userFile.setFileName(fileUploadForm.getXmlFile().getOriginalFilename());
+			userFile.setUser(user);
+			userFile.setUploadedDate(new Date());
+			dataStoreManager.save(userFile);
+			
 			String[] splitedName=fileUploadForm.getXmlFile().getOriginalFilename().split("\\.");
 			if(splitedName[splitedName.length-1].equals("java")){
 				System.out.println("*********** Its A Java File");
@@ -68,7 +87,7 @@ public class MainController {
 				System.out.println(writeFile(fileUploadForm.getXmlFile(), "CProgram","c"));
 				String compileOutput=fileProcessor.compileCFile("CProgram.c");
 				String runOutput=fileProcessor.runCFile("CProgram.c");
-				
+
 				mv.addObject("fileType","C");
 				mv.addObject("runOutput",runOutput);
 				mv.addObject("compileOutput",compileOutput);
@@ -88,62 +107,62 @@ public class MainController {
 			}else  {
 				mv.addObject("error", "File Not Supported");
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("error", "File Not Supported");
 		}	
 		return mv;
 	}
-	
+
 	private String writeFile(MultipartFile file,String name,String ext) throws IOException{
-		 byte[] bytes = file.getBytes();
-         BufferedOutputStream stream =
-                 new BufferedOutputStream(new FileOutputStream(new File(name + "."+ext)));
-         stream.write(bytes);
-         stream.close();
-         return "You successfully uploaded " + name + " into " + name + "-uploaded !";
+		byte[] bytes = file.getBytes();
+		BufferedOutputStream stream =
+				new BufferedOutputStream(new FileOutputStream(new File(name + "."+ext)));
+		stream.write(bytes);
+		stream.close();
+		return "You successfully uploaded " + name + " into " + name + "-uploaded !";
 	}
-	
+
 	@RequestMapping("/download-file")
 	public void getFile(
-	    @RequestParam String type, 
-	    HttpServletResponse response) {
+			@RequestParam String type, 
+			HttpServletResponse response) {
 		int BUFFER_SIZE = 4096;
 
-	    try {
-	      // get your file as InputStream
-	    	InputStream is = new FileInputStream(new File(type)); ;
-	    	// get output stream of the response
-	        OutputStream outStream = response.getOutputStream();
-	 
-	        byte[] buffer = new byte[BUFFER_SIZE];
-	        int bytesRead = -1;
-	 
-	        response.setHeader("Content-Disposition", "attachment; filename=\" " + type + "\"");
+		try {
+			// get your file as InputStream
+			InputStream is = new FileInputStream(new File(type)); ;
+			// get output stream of the response
+			OutputStream outStream = response.getOutputStream();
 
-	        
-	        // write bytes read from the input stream into the output stream
-	        while ((bytesRead = is.read(buffer)) != -1) {
-	            outStream.write(buffer, 0, bytesRead);
-	        }
-	 
-	        is.close();
-	        outStream.close();
-	 
-	    } catch (IOException ex) {
-	      throw new RuntimeException("IOError writing file to output stream");
-	    }
+			byte[] buffer = new byte[BUFFER_SIZE];
+			int bytesRead = -1;
+
+			response.setHeader("Content-Disposition", "attachment; filename=\" " + type + "\"");
+
+
+			// write bytes read from the input stream into the output stream
+			while ((bytesRead = is.read(buffer)) != -1) {
+				outStream.write(buffer, 0, bytesRead);
+			}
+
+			is.close();
+			outStream.close();
+
+		} catch (IOException ex) {
+			throw new RuntimeException("IOError writing file to output stream");
+		}
 
 	}
-	
+
 	@RequestMapping("/login")
 	public ModelAndView login(HttpSession httpSession){
 		ModelAndView mv=new ModelAndView("login");
 		User userl=(User) httpSession.getAttribute("user");		
 		return mv;
 	}
-	
+
 	@RequestMapping("/authenticate")
 	public ModelAndView authenticate(HttpSession httpSession,HttpServletRequest request){
 		ModelAndView mv=new ModelAndView("new/index");
@@ -153,10 +172,12 @@ public class MainController {
 		if(user==null){
 			mv=new ModelAndView("service-invoke/login");
 			mv.addObject("error", "email /  password is wrong");
+		}else{
+			httpSession.setAttribute("user", user);
 		}
 		return mv;
 	}
-	
+
 	@RequestMapping("/register")
 	public ModelAndView register(){
 		ModelAndView mv=new ModelAndView("signup/signup");
@@ -168,6 +189,21 @@ public class MainController {
 	public ModelAndView registerNewUser(HttpServletRequest request,@ModelAttribute(UserForm.key) UserForm userForm){
 		ModelAndView mv=new ModelAndView("signup/complete");
 		userService.addUser(userForm);
+		return mv;
+	}
+	
+	@RequestMapping("/logout")
+	public ModelAndView logout(HttpSession session){
+		ModelAndView mv=new ModelAndView("redirect:/login");
+		session.invalidate();
+		return mv;
+	}
+	
+	@RequestMapping("/user-files")
+	public ModelAndView userFiles(HttpSession session){
+		ModelAndView mv=new ModelAndView("new/user-files");
+		User user = (User) session.getAttribute("user");
+		mv.addObject("userFiles", dataStoreManager.listUserFiles(user));
 		return mv;
 	}
 
