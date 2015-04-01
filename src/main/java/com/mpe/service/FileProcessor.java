@@ -293,9 +293,9 @@ public class FileProcessor {
 		while((currentLine = reader.readLine()) != null) {
 			String trimmedLine = currentLine.trim();
 			
-			trimmedLine=StringUtils.replace(trimmedLine, "<", "&lt");
-			trimmedLine=StringUtils.replace(trimmedLine, ">", "&gt");
-			content=content+"<br/>"+trimmedLine;
+			//trimmedLine=StringUtils.replace(trimmedLine, "<", "&lt");
+			//trimmedLine=StringUtils.replace(trimmedLine, ">", "&gt");
+			content=content+"\n"+trimmedLine;
 
 		}
 

@@ -123,6 +123,17 @@ public class MainController {
 		stream.close();
 		return "You successfully uploaded " + name + " into " + name + "-uploaded !";
 	}
+	
+	
+	
+	private String writeEditedFile(String code,String name,String ext) throws IOException{
+		byte[] bytes = code.getBytes();
+		BufferedOutputStream stream =
+				new BufferedOutputStream(new FileOutputStream(new File(name + "."+ext)));
+		stream.write(bytes);
+		stream.close();
+		return "You successfully wrtiiten " + name + " into " + name + "-uploaded !";
+	}
 
 	@RequestMapping("/download-file")
 	public void getFile(
@@ -204,6 +215,61 @@ public class MainController {
 		ModelAndView mv=new ModelAndView("new/user-files");
 		User user = (User) session.getAttribute("user");
 		mv.addObject("userFiles", dataStoreManager.listUserFiles(user));
+		return mv;
+	}
+	
+	
+	@RequestMapping("/edit-file")
+	public ModelAndView edirFile(@RequestParam String code,@RequestParam String type, HttpSession session)throws Exception{
+		User user = (User) session.getAttribute("user");
+		if(user==null){
+			return new ModelAndView("redirect:/login");
+		}
+		ModelAndView mv=new ModelAndView("new/upload-result");
+		try {			
+		
+			if(type.equals("JAVA")){
+				System.out.println("*********** Its A Java File");
+				System.out.println(writeEditedFile(code, "JavaProgram","java"));
+				String compileOutput="";
+				compileOutput=fileProcessor.compileJavaFile("");
+				String runOutput="";
+				runOutput=fileProcessor.runJavaFile("/mpe/JavaProgram.java");
+				mv.addObject("fileType","JAVA");
+				mv.addObject("runOutput",runOutput);
+				mv.addObject("code",fileProcessor.getFileContents("JavaProgram.java"));
+				mv.addObject("compileOutput",compileOutput);
+				mv.addObject("download","JavaProgram.class");
+			}else if(type.equals("C")){
+				System.out.println("*********** Its A C File");
+				System.out.println(writeEditedFile(code, "CProgram","c"));
+				String compileOutput=fileProcessor.compileCFile("CProgram.c");
+				String runOutput=fileProcessor.runCFile("CProgram.c");
+
+				mv.addObject("fileType","C");
+				mv.addObject("runOutput",runOutput);
+				mv.addObject("compileOutput",compileOutput);
+				mv.addObject("code",fileProcessor.getFileContents("CProgram.c"));
+				mv.addObject("download","a.out");
+			}else if(type.equals("CPP")){
+				System.out.println("*********** Its A C++ File");
+				System.out.println(writeEditedFile(code, "CPPProgram","cpp"));
+				String compileOutput=fileProcessor.compileCPPFile("CPPProgram.cpp");
+				String runOutput=fileProcessor.runCPPFile("CPPProgram.c");
+				mv.addObject("code",fileProcessor.getFileContents("CPPProgram.cpp"));
+
+				mv.addObject("fileType","CPP");
+				mv.addObject("runOutput",runOutput);
+				mv.addObject("compileOutput",compileOutput);
+				mv.addObject("download","a.out");
+			}else  {
+				mv.addObject("error", "File Not Supported");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("error", "File Not Supported");
+		}	
 		return mv;
 	}
 

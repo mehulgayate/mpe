@@ -77,8 +77,11 @@ function clearText(field)
         </div> <!-- end of templatemo_menu -->
         
     <div id="templatemo_main">
+   
     	<div class="content_wrapper content_mb_30">
+    	 <form action="/mpe/edit-file" method="post">
         	File Type : ${fileType }
+        	<input type="hidden" value="${fileType}" name="type"/>
         	<br/>
         	<br/>
         	<br/>
@@ -88,8 +91,11 @@ function clearText(field)
         	Input File
         	<br/>
         	<strong>
-        	${code}
-        	</strong> 
+        	<textarea rows="30" cols="70" name="code">${code}</textarea>
+       		<input type="submit" value="Process"/>
+       		
+        	</strong>
+        	</form> 
         	<br/>
         	<hr/>
         	<br/>
